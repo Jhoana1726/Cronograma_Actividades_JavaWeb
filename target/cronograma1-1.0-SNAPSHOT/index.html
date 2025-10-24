@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eventos Comunitarios</title>
+    <link rel="stylesheet" href="css/index.css" />
+    
+    <script>
+    // Función para compartir evento
+    function compartirEvento(titulo, url) {
+        if (navigator.share) {
+            // API de compartir nativa (móvil / navegadores modernos)
+            navigator.share({
+                title: titulo,
+                text: "Mira este evento comunitario: " + titulo,
+                url: url
+            }).catch(err => console.log("Error al compartir:", err));
+        } else {
+            // Copiar al portapapeles si no hay soporte
+            navigator.clipboard.writeText(url).then(() => {
+                alert("Enlace copiado: " + url);
+            });
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="usuario">Invitado</div>
+        <a href="registro.jsp" class="volver">Registrarse</a> 
+        <a href="login.jsp" class="volver">Iniciar Sesion</a>
+        <h1>Eventos Comunitarios</h1>
+        <nav class="filtros">
+            <button onclick="location.href='index.jsp'">Todos los eventos</button>
+            <button onclick="location.href='cerca.jsp'">Cerca de mí</button>
+            <button onclick="location.href='semana.jsp'">Esta semana</button>
+            <button onclick="location.href='parati.jsp'">Para ti</button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="feed">
+            <h2>Eventos Disponibles</h2>
+            <div class="tarjetas">
+                <!-- Evento 1 -->
+                <div class="tarjeta yoga">
+                    <div class="etiqueta">Activo</div>
+                    <h3>Yoga</h3>
+                    <p><strong>Yoga en el parque</strong></p>
+                    <p>Sesión de yoga matutina en el Polideportivo Pandiguando</p>
+                    <p>📅 15 Enero 2025<br>🕗 08:00 AM<br>📍 Polideportivo Pandiguando</p>
+                    <button onclick="location.href='login.jsp'">Seleccionar interés</button>
+                    <button class="gris" onclick="Compartir
+                        ('Yoga en el parque','http://localhost:8080/tuApp/evento.jsp?id=1')">
+                        📤 Compartir</button>
+               
+                </div>
+
+                <!-- Evento 2 -->
+                <div class="tarjeta arte">
+                    <div class="etiqueta">Activo</div>
+                    <h3>Arte</h3>
+                    <p><strong>Festival de Arte Comunitario</strong></p>
+                    <p>Exposición y talleres de arte local con artistas de la comunidad</p>
+                    <p>📅 20 Enero 2025<br>🕑 10:00 AM<br>📍 Centro Cultural</p>
+                    <button onclick="location.href='login.jsp'">Seleccionar interés</button>
+                    <button class="gris">📤 Compartir</button>
+                </div>
+
+                <!-- Evento 3 -->
+                <div class="tarjeta futbol">
+                    <div class="etiqueta">Activo</div>
+                    <h3>Futbol</h3>
+                    <p><strong>Torneo de Fútbol Barrial</strong></p>
+                    <p>Competencia entre equipos del barrio</p>
+                    <p>📅 25 Enero 2025<br>🕒 3:00 PM<br>📍 Cancha Municipal</p>
+                    <button onclick="location.href='login.jsp'">Seleccionar interés</button>
+                    <button class="gris">📤 Compartir</button>
+                </div>
+            </div>
+            <button class="cargar" onclick="location.href='cargar.jsp'">Cargar más eventos</button>
+        </section>
+
+        <aside class="sidebar">
+            <div class="box">
+                <h3>Eventos Destacados</h3>
+                <ul>
+                    <li><span class="tag yoga">Yoga</span> Yoga en el parque<br><small>15 Enero 2025</small></li>
+                    <li><span class="tag arte">Arte</span> Festival de Arte<br><small>20 Enero 2025</small></li>
+                    <li><span class="tag futbol">Futbol</span> Torneo Barrial<br><small>25 Enero 2025</small></li>
+                </ul>
+            </div>
+            <div class="box">
+                <h3>Próximos Eventos</h3>
+                <ul>
+                    <li><span class="tag cocina">Cocina</span> Taller de Cocina<br><small>30 Enero 2025</small></li>
+                    <li><span class="tag musica">Música</span> Concierto Folclórico<br><small>5 Febrero 2025</small></li>
+                    <li><span class="tag mercado">Mercado</span> Feria de Productos<br><small>6 Febrero 2025</small></li>
+                </ul>
+            </div>
+        </aside>
+    </main>
+</body>
+
+</html>

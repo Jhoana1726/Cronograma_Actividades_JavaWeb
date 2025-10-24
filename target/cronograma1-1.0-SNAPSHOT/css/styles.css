@@ -1,0 +1,192 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #F2F2F2;
+    color: #1C1E21;
+     overflow-y: auto;  /* permite scroll */
+    height: auto;      /* evita limitar el alto total */
+    
+}
+
+header {
+    background: linear-gradient(135deg, rgba(255, 107, 129, 0.9), rgba(161, 99, 240, 0.9));
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+main {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+}
+
+.feed {
+    flex: 2;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.create-post textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    resize: none;
+}
+
+.create-post button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #FF6B81;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.create-post button:hover {
+    background: #E95B70;
+}
+
+.post {
+    background-color: #ffffff;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.post button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: #5F9DF7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.post button:hover {
+    background: #3E88F0;
+}
+
+.sidebar {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.sidebar nav ul {
+    list-style: none;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar nav ul li a {
+    color: #A163F0;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.sidebar nav ul li a:hover {
+    color: #FF6B81;
+}
+
+/* Login/Registro estilo */
+.auth-body {
+    background: linear-gradient(135deg, rgba(255, 107, 129, 0.9), rgba(161, 99, 240, 0.9));
+    display: flex;                  /* centramos horizontalmente */
+    justify-content: center;        /* al centro horizontal */
+    align-items: flex-start;        /* arriba, no centrado vertical */
+    min-height: 100vh;              /* ocupa toda la pantalla */
+    padding-top: 60px;              /* espacio arriba para no quedar pegado */
+    padding-bottom: 60px;           /* deja espacio abajo */
+    overflow-y: auto;               /* permite scroll */
+}
+
+.auth-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    
+}
+
+.auth-container h2 {
+    color: #A163F0;
+    margin-bottom: 20px;
+}
+
+.auth-container form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.auth-container form button {
+    width: 100%;
+    padding: 12px;
+    background: #FF6B81;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.auth-container form button:hover {
+    background: #E95B70;
+}
+
+.auth-links {
+    margin-top: 15px;
+}
+
+.auth-links a {
+    display: block;
+    margin-bottom: 8px;
+    color: #5F9DF7;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.volver {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 16px;
+
+}

@@ -1,0 +1,308 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(135deg, rgba(255, 107, 129, 0.9), rgba(161, 99, 240, 0.9));
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+main {
+    padding: 30px;
+}
+
+.bienvenida {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.accesos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+}
+
+.card p {
+    margin-bottom: 15px;
+}
+
+.card a {
+    text-decoration: none;
+    background: linear-gradient(135deg, rgba(137, 60, 237, 0.9), rgba(161, 99, 240, 0.9));
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.card a:hover {
+    background: linear-gradient(135deg, rgba(109, 9, 239, 0.9), rgba(138, 59, 242, 0.9));
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #ecf0f1;
+    margin-top: 40px;
+}
+
+
+/* ====== Gestión de Usuarios ====== */
+
+.gestion-usuarios header {
+    background: linear-gradient(135deg, rgba(255, 107, 129, 0.9), rgba(161, 99, 240, 0.9));;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.gestion-usuarios .volver {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 16px;
+   
+}
+
+.filtros {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px auto;
+    flex-wrap: wrap;
+}
+
+.filtros input,
+.filtros select,
+.filtros button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.filtros button {
+    background: #5c38a9;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.filtros button:hover {
+    background: #8066b1;
+}
+
+.tabla {
+    margin: 0 auto;
+    width: 90%;
+    max-width: 1000px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+thead {
+    background: #ecf0f1;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+button.editar,
+button.eliminar,
+button.rol {
+    padding: 6px 10px;
+    border-radius: 4px;
+    margin-right: 5px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+button.editar {
+    background-color: #8febd6;
+    color: white;
+}
+
+button.eliminar {
+    background-color: #e64673;
+    color: white;
+}
+
+button.rol {
+    background-color: #be4ae4;
+    color: white;
+}
+
+/* ====== Gestión de Eventos ====== */
+
+.gestion-eventos header {
+    background: linear-gradient(135deg, rgba(255, 107, 129, 0.9), rgba(161, 99, 240, 0.9));;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.gestion-eventos .volver {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    text-decoration: none;
+    color: #ecf0f1;
+    font-size: 16px;
+}
+
+.filtros-eventos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px auto;
+}
+
+.filtros-eventos select,
+.filtros-eventos input,
+.filtros-eventos button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.filtros-eventos button {
+    background: #5c38a9;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.filtros-eventos button:hover {
+    background: #8066b1;
+}
+
+.tabla-eventos {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+
+.tabla-eventos table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.tabla-eventos thead {
+    background: #ecf0f1;
+}
+
+.tabla-eventos th,
+.tabla-eventos td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.estado-borrador {
+    color: #e64673;
+    font-weight: bold;
+}
+
+.estado-revision {
+    color: #be4ae4;
+    font-weight: bold;
+}
+
+.estado-publicado {
+    color: #4aaf74;
+    font-weight: bold;
+}
+
+.acciones-evento button {
+    padding: 6px 10px;
+    border-radius: 4px;
+    margin-right: 5px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+.acciones-evento .editar {
+    background-color: #8febd6;
+    color: white;
+}
+
+.acciones-evento .eliminar {
+    background-color: #e64673;
+    color: white;
+}
+
+.acciones-evento .devolver {
+    background-color: #be4ae4;
+    color: white;
+}
+
+.acciones-evento .ver {
+    background-color: #7f8c8d;
+    color: white;
+}
