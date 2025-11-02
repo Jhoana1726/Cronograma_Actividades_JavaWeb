@@ -126,15 +126,17 @@ main {
 }
 
 .auth-container {
-    background-color: white;
-    padding: 30px;
-    border-radius: 14px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
+    background-color: white; /* Define el color de fondo del contenedor como blanco. */
+    padding: 30px;           /* Agrega espacio interno (margen interior) de 30 píxeles en todos los lados, separando el contenido del borde. */
+    border-radius: 14px;     /* Redondea las esquinas del contenedor con un radio de 14 píxeles para un efecto más suave y moderno. */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Aplica una sombra debajo del contenedor: desplazamiento vertical de 8px, desenfoque de 20px y color negro semitransparente (15% opacidad). */
+    width: 100%;             /* Hace que el contenedor ocupe el 100% del ancho disponible dentro de su elemento padre. */
+    max-width: 400px;        /* Limita el ancho máximo del contenedor a 400 píxeles, para que no se expanda demasiado en pantallas grandes. */
+    text-align: center;      /* Centra horizontalmente el texto y otros elementos en línea dentro del contenedor. */
     
 }
+
+
 
 .auth-container h2 {
     color: #A163F0;
