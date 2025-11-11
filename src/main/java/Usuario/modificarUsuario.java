@@ -5,13 +5,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Clase modificarUsuario
+ * Permite modificar los datos de un usuario existente en la base de datos.
+ * 
+ * Este código está adaptado para poder ser probado con JUnit5.
+ * No usa método main, sino que expone el método público modificarUsuarioBD(...)
+ * que puede ser llamado desde una prueba o desde otro módulo del sistema.
+ */
 public class modificarUsuario {
 
-    // Enum para controlar valores válidos en género
+    /**
+     * Enumeración para controlar los valores válidos del campo "género".
+     * Solo permite "M" (masculino) o "F" (femenino).
+     */
     public enum Genero {
         M("M"),
         F("F");
@@ -27,49 +37,73 @@ public class modificarUsuario {
         }
     }
 
-    public static void main(String[] args) {
-        conexion con = new conexion();
-        Connection cn;
-        PreparedStatement ps;
-        Statement st;
-        ResultSet rs;
+    // Instancia de la clase conexion, encargada de abrir la conexión a la base de datos
+    private conexion con = new conexion();
 
-        // ID del usuario que se quiere modificar
-        int id_editar = 2;
+    /**
+     * Método principal de negocio para modificar un usuario.
+     * 
+     * @param id_usuario  ID del usuario que se desea modificar
+     * @param nombre      Nuevo nombre
+     * @param email       Nuevo correo electrónico
+     * @param celular     Nuevo número de celular
+     * @param genero      Nuevo género (enum Genero)
+     * @param edad        Nueva edad
+     * @param cedula      Nueva cédula
+     * @param barrio      Nuevo barrio
+     * @param estrato     Nuevo estrato
+     * @return true si la actualización fue exitosa, false en caso contrario
+     */
+    public boolean modificarUsuarioBD(int id_usuario, String nombre, String email, String celular,
+                                      Genero genero, int edad, String cedula, String barrio, int estrato) {
 
-        // Nuevos datos
-        String nombre = "Laura Suarez";
-        String email = "lau23san@gmail.com";
-        String celular = "3105432678";
-        Genero genero = Genero.F;
-        int edad = 38;
-        String cedula = "1002456783";
-        String barrio = "El Uvo";
-        int estrato = 2;
+        Connection cn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Establecer conexión con la base de datos
             cn = con.getConnection();
             if (cn == null) {
                 System.out.println("No se pudo conectar a la base de datos.");
-                return;
+                return false;
             }
 
-            //Verificar si el correo nuevo ya pertenece a otro usuario
-            String verificarCorreo = "SELECT id_usuario FROM Usuario WHERE email = ? AND id_usuario <> ?";
-            ps = cn.prepareStatement(verificarCorreo);
+            // Paso 1: verificar que el usuario con ese ID exista
+            String sqlExiste = "SELECT id_usuario FROM Usuario WHERE id_usuario = ?";
+            ps = cn.prepareStatement(sqlExiste);
+            ps.setInt(1, id_usuario);
+            rs = ps.executeQuery();
+
+            if (!rs.next()) {
+                // No se encontró un usuario con ese ID
+                System.out.println("No existe un usuario con el id " + id_usuario);
+                return false;
+            }
+
+            rs.close();
+            ps.close();
+
+            // Paso 2: verificar que el nuevo correo no esté en uso por otro usuario
+            String sqlEmail = "SELECT id_usuario FROM Usuario WHERE email = ? AND id_usuario <> ?";
+            ps = cn.prepareStatement(sqlEmail);
             ps.setString(1, email);
-            ps.setInt(2, id_editar);
+            ps.setInt(2, id_usuario);
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                System.out.println("Error: El correo '" + email + "' ya está siendo usado por otro usuario.");
-                return; // Detiene la ejecución del UPDATE
+                // Existe otro usuario con el mismo correo
+                System.out.println("Error: el correo '" + email + "' ya está en uso.");
+                return false;
             }
 
-            //Actualizar usuario
-            String sql = "UPDATE Usuario SET nombre = ?, email = ?, celular = ?, genero = ?, edad = ?, cedula = ?, barrio = ?, estrato = ? WHERE id_usuario = ?";
-            ps = cn.prepareStatement(sql);
+            rs.close();
+            ps.close();
+
+            // Paso 3: realizar la actualización en la tabla Usuario
+            String sqlUpdate = "UPDATE Usuario SET nombre = ?, email = ?, celular = ?, genero = ?, edad = ?, " +
+                               "cedula = ?, barrio = ?, estrato = ? WHERE id_usuario = ?";
+            ps = cn.prepareStatement(sqlUpdate);
             ps.setString(1, nombre);
             ps.setString(2, email);
             ps.setString(3, celular);
@@ -78,36 +112,30 @@ public class modificarUsuario {
             ps.setString(6, cedula);
             ps.setString(7, barrio);
             ps.setInt(8, estrato);
-            ps.setInt(9, id_editar);
+            ps.setInt(9, id_usuario);
 
             int filas = ps.executeUpdate();
+
             if (filas > 0) {
-                System.out.println("Registro con id_usuario " + id_editar + " actualizado correctamente.");
+                // Actualización exitosa
+                System.out.println("Usuario con ID " + id_usuario + " actualizado correctamente.");
+                return true;
             } else {
-                System.out.println("No se encontró el registro con id_usuario " + id_editar);
+                // No se actualizó ningún registro
+                System.out.println("No se pudo actualizar el usuario con ID " + id_usuario);
+                return false;
             }
 
-            //Mostrar todos los usuarios después de la actualización
-            st = cn.createStatement();
-            rs = st.executeQuery("SELECT * FROM Usuario");
-
-            System.out.println("Registros actuales en la tabla Usuario:");
-            while (rs.next()) {
-                System.out.println(
-                        rs.getInt("id_usuario") + ": "
-                        + rs.getString("nombre") + " - "
-                        + rs.getString("email") + " - "
-                        + rs.getString("celular") + " - "
-                        + rs.getString("genero") + " - "
-                        + rs.getInt("edad") + " - "
-                        + rs.getString("cedula") + " - "
-                        + rs.getString("barrio") + " - "
-                        + rs.getInt("estrato")
-                );
-            }
-
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
+            // Captura y registro del error SQL
             Logger.getLogger(modificarUsuario.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+
+        } finally {
+            // Cierre ordenado de recursos
+            try { if (rs != null) rs.close(); } catch (SQLException ignored) {}
+            try { if (ps != null) ps.close(); } catch (SQLException ignored) {}
+            try { if (cn != null) cn.close(); } catch (SQLException ignored) {}
         }
     }
 }

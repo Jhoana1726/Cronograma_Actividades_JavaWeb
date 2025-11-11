@@ -1,0 +1,4 @@
+Usuario\AgregarUsuarioTest.class
+Usuario\ModificarUsuarioTest.class
+Usuario\ConsultarUsuarioTest.class
+Usuario\EliminarUsuarioTest.class

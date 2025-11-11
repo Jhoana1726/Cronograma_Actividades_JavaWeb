@@ -1,74 +1,105 @@
 package Usuario;
 
-import conexion.conexion;
-import java.sql.Connection; 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import conexion.conexion;     // Importa la clase que gestiona la conexión con la base de datos.
+import java.sql.*;             // Importa las clases necesarias para manejar SQL (Connection, PreparedStatement, ResultSet, etc.).
 
+/**
+ * Clase agregarUsuario
+ * Su propósito es permitir registrar nuevos usuarios en la base de datos y verificar
+ * si un correo electrónico ya se encuentra registrado.
+ * 
+ * Se implementan métodos independientes (sin main) para que puedan ser probados 
+ * fácilmente mediante pruebas unitarias con JUnit 5.
+ */
 public class agregarUsuario {
-    
+
+    /**
+     * Enumeración interna para representar los posibles géneros de un usuario.
+     * Se utiliza un enum en lugar de texto libre para evitar errores tipográficos
+     * y estandarizar los valores posibles.
+     */
     public enum Genero {
         F, M, Otro
     }
-    
-    public static void main(String[] args) {
-        conexion con = new conexion();
-        Connection cn;
-        Statement st;
-        ResultSet rs;
 
-        String nombre = "Alexander Gironza";
-        String email = "alex29284@gmail.com";
-        String password = "12345";
-        String celular = "3105678934";
-        Genero genero = Genero.M;
-        int edad = 24;
-        String cedula = "1005678904";
-        String barrio = "La Paz";
-        int estrato = 2;
-        
-        try {
-            cn = con.getConnection();
-            st = cn.createStatement();
+    /**
+     * Objeto de tipo 'conexion' que maneja la conexión a la base de datos.
+     * Esto permite obtener un objeto Connection cuando sea necesario.
+     */
+    private conexion con = new conexion();
 
-            //Verificar si el correo ya existe
-            String checkEmail = "SELECT * FROM Usuario WHERE email = '" + email + "'";
-            rs = st.executeQuery(checkEmail);
-            
-            if (rs.next()) {
-                // Si encuentra un resultado, el correo ya está registrado
-                System.out.println("Error: El correo '" + email + "' ya está registrado en el sistema.");
-            } else {
-                //Si el correo no existe, insertar nuevo usuario
-                String sql = "INSERT INTO Usuario (nombre, email, password, celular, genero, edad, cedula, barrio, estrato) VALUES ('" 
-                        + nombre + "','" + email + "','" + password + "','" + celular + "','" + genero + "','" + edad + "','" 
-                        + cedula + "','" + barrio + "','" + estrato + "')";
-                
-                st.executeUpdate(sql);
-                System.out.println("Registro insertado correctamente.");
+    /**
+     * Método que verifica si un correo electrónico ya existe en la base de datos.
+     * @param email El correo que se desea verificar.
+     * @return true si el correo existe, false si no existe o si ocurre un error.
+     * 
+     * Se utiliza PreparedStatement para prevenir inyección SQL y manejar 
+     * parámetros de forma más segura.
+     */
+    public boolean existeEmail(String email) {
+        String sql = "SELECT * FROM Usuario WHERE email = ?";
+        try (
+            Connection cn = con.getConnection();               
+            PreparedStatement ps = cn.prepareStatement(sql)    
+        ) {
+            ps.setString(1, email);                            
+            ResultSet rs = ps.executeQuery();                  
+            return rs.next();                                  
+        } catch (SQLException e) {
+            e.printStackTrace();                               
+            return false;                                      
+        }
+    }
 
-                //Consultar todos los registros
-                rs = st.executeQuery("SELECT * FROM Usuario");
-                while (rs.next()) {
-                    System.out.println(
-                        rs.getInt("id_usuario") + " : " 
-                        + rs.getString("nombre") + " - " 
-                        + rs.getString("email") + " - " 
-                        + rs.getString("celular") + " - "  
-                        + rs.getString("genero") + " - " 
-                        + rs.getInt("edad") + " - " 
-                        + rs.getString("cedula") + " - " 
-                        + rs.getString("barrio") + " - " 
-                        + rs.getInt("estrato")
-                    );
-                }
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(agregarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+    /**
+     * Método que inserta un nuevo usuario en la base de datos.
+     * @param nombre Nombre del usuario.
+     * @param email Correo electrónico del usuario.
+     * @param password Contraseña del usuario.
+     * @param celular Número de celular.
+     * @param genero Género (F, M u Otro).
+     * @param edad Edad del usuario.
+     * @param cedula Documento de identidad.
+     * @param barrio Barrio de residencia.
+     * @param estrato Estrato socioeconómico.
+     * @return true si el usuario fue insertado exitosamente, false si ya existe o si ocurre un error.
+     * 
+     * Este método primero verifica si el correo ya está registrado usando el método 'existeEmail()'.
+     * Si no existe, procede a insertar el nuevo usuario con un PreparedStatement.
+     */
+    public boolean insertarUsuario(String nombre, String email, String password, String celular,
+                                   Genero genero, int edad, String cedula, String barrio, int estrato) {
+
+        if (existeEmail(email)) {
+            // Si el correo ya existe, no se realiza el registro.
+            return false;
+        }
+
+        String sql = "INSERT INTO Usuario (nombre, email, password, celular, genero, edad, cedula, barrio, estrato) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (
+            Connection cn = con.getConnection();               
+            PreparedStatement ps = cn.prepareStatement(sql)    
+        ) {
+            ps.setString(1, nombre);
+            ps.setString(2, email);
+            ps.setString(3, password);
+            ps.setString(4, celular);
+            ps.setString(5, genero.name()); 
+            ps.setInt(6, edad);
+            ps.setString(7, cedula);
+            ps.setString(8, barrio);
+            ps.setInt(9, estrato);
+
+            ps.executeUpdate();
+
+            // Si la inserción fue exitosa, se devuelve true.
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

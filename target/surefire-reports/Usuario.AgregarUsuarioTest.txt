@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: Usuario.AgregarUsuarioTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 2.693 s <<< FAILURE! -- in Usuario.AgregarUsuarioTest
+Usuario.AgregarUsuarioTest.testAgregarUsuario -- Time elapsed: 2.611 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: El usuario debería haberse agregado correctamente. ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at Usuario.AgregarUsuarioTest.testAgregarUsuario(AgregarUsuarioTest.java:59)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
